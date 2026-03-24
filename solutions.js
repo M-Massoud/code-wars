@@ -1,7 +1,7 @@
 // https://www.codewars.com/kata/5782dd86202c0e43410001f6
 // Number , number ... wait LETTER !
 
-const cleanUpWords = (sentence = "") => {
+const cleanUpWords = (sentence) => {
   const words = sentence.split(" ");
 
   const arrangedWords = [];
@@ -19,8 +19,6 @@ const cleanUpWords = (sentence = "") => {
     arrangedWords.sort();
   });
 
-  console.log(arrangedWords);
-
   arrangedWords.map((word) => {
     const cleanedWord = word.substring(1, word.length);
     wordsWithoutLetters.push(cleanedWord);
@@ -29,8 +27,55 @@ const cleanUpWords = (sentence = "") => {
   return wordsWithoutLetters.join(" ");
 };
 
-const doTheMath = "";
+const applyOperator = (operator, x, y) => {
+  switch (operator) {
+    case "+":
+      return x + y;
+    case "-":
+      return x - y;
+    case "*":
+      return x * y;
+    case "/":
+      return x / y;
+  }
+};
 
-console.log(cleanUpWords("24z6 1x23 y369 89a 900b"));
+const doMath = (sentence) => {
+  const computations = ["+", "-", "*", "/"];
 
-//Todo arrange the words based on the letter, do the math
+  const numbers = cleanUpWords(sentence);
+
+  const calculatedNumbers = numbers.split(" ");
+
+  console.log("numbers", numbers);
+
+  let result = 0;
+  let operator;
+  let computationsIndex;
+
+  for (let i = 0; i < calculatedNumbers.length; i++) {
+    if (i === 0) {
+      result = +calculatedNumbers[i];
+      continue;
+    }
+
+    computations[computationsIndex] !== undefined &&
+    computationsIndex < computations.length - 1
+      ? (computationsIndex += 1)
+      : (computationsIndex = 0);
+
+    operator = computations[computationsIndex];
+    console.log("operator", operator);
+
+    console.log("calculated number", calculatedNumbers[i]);
+
+    result = applyOperator(operator, +result, +calculatedNumbers[i]);
+  }
+
+  console.log("result:  ", result);
+
+  return result;
+};
+
+console.log(doMath("24z6 1x23 y369 89a 900b"));
+console.log(doMath("24z6 1z23 y369 89z 900b"));
