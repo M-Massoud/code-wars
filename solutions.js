@@ -16,15 +16,16 @@ const cleanUpWords = (sentence) => {
     });
 
     arrangedWords.push(arrangedWord);
-    arrangedWords.sort();
   });
+
+  arrangedWords.sort((a, b) => a[0].localeCompare(b[0]));
 
   arrangedWords.map((word) => {
     const cleanedWord = word.substring(1, word.length);
     wordsWithoutLetters.push(cleanedWord);
   });
 
-  return wordsWithoutLetters.join(" ");
+  return wordsWithoutLetters;
 };
 
 const applyOperator = (operator, x, y) => {
@@ -43,11 +44,7 @@ const applyOperator = (operator, x, y) => {
 const doMath = (sentence) => {
   const computations = ["+", "-", "*", "/"];
 
-  const numbers = cleanUpWords(sentence);
-
-  const calculatedNumbers = numbers.split(" ");
-
-  console.log("numbers", numbers);
+  const calculatedNumbers = cleanUpWords(sentence);
 
   let result = 0;
   let operator;
@@ -65,17 +62,12 @@ const doMath = (sentence) => {
       : (computationsIndex = 0);
 
     operator = computations[computationsIndex];
-    console.log("operator", operator);
-
-    console.log("calculated number", calculatedNumbers[i]);
 
     result = applyOperator(operator, +result, +calculatedNumbers[i]);
   }
 
-  console.log("result:  ", result);
-
-  return result;
+  return Math.round(result);
 };
 
-console.log(doMath("24z6 1x23 y369 89a 900b"));
-console.log(doMath("24z6 1z23 y369 89z 900b"));
+console.log(doMath("24z6 1x23 y369 89a 900b")); // 1299
+console.log(doMath("24z6 1z23 y369 89z 900b")); // 1414
